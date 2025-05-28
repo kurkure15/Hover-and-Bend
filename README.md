@@ -60,6 +60,11 @@ src/
 
 This project is open source and available under the MIT License.
 
+## Connect
+
+- **GitHub**: [kurkure15](https://github.com/kurkure15)
+- **Instagram**: [@your_instagram_handle](https://instagram.com/your_instagram_handle)
+
 ---
 
 *Built with ❄️ by [kurkure15](https://github.com/kurkure15)*
