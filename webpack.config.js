@@ -76,6 +76,8 @@ module.exports = {
     plugins: [
         new CopyPlugin([
             { from: './src/img', to: path.join(finalPath, '/img'), force: true },
+            { from: './index.html', to: finalPath, force: true },
+            { from: './favicon.ico', to: finalPath, force: true },
         ]),
         new MiniCssExtractPlugin({
             filename: 'app.css',
