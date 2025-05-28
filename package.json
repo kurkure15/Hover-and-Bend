@@ -4,12 +4,17 @@
   "description": "Interactive WebGL experience featuring snow and mountain imagery with custom hover and reveal effects",
   "author": "kurkure15",
   "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/kurkure15/Hover-and-Bend.git"
   },
   "scripts": {
-    "build": "webpack --config webpack.config.js",
+    "build": "webpack --mode=production --config webpack.config.js",
+    "dev": "webpack --mode=development --config webpack.config.js",
     "watch": "webpack --watch --config webpack.config.js"
   },
   "devDependencies": {

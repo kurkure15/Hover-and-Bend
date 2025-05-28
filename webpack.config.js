@@ -1,16 +1,16 @@
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 
 const finalPath = path.resolve(__dirname, 'dist')
+const isProduction = process.env.NODE_ENV === 'production'
 
 module.exports = {
-    mode: 'development',
+    mode: isProduction ? 'production' : 'development',
     entry: './src/js/index.js',
     output: {
         path: finalPath,
-        filename: 'app.js',
+        filename: 'app.js'
     },
     resolve: {
         alias: {
@@ -75,16 +75,18 @@ module.exports = {
     },
     plugins: [
         new CopyPlugin([
-            { from: './src/fonts', to: path.join(finalPath, '/fonts'), force: true },
             { from: './src/img', to: path.join(finalPath, '/img'), force: true },
         ]),
         new MiniCssExtractPlugin({
             filename: 'app.css',
         }),
-        new BrowserSyncPlugin({
-            host: 'localhost',
-            port: 3000,
-            server: { baseDir: '.' },
-        }),
+        // Only add BrowserSync in development
+        ...(isProduction ? [] : [
+            new (require('browser-sync-webpack-plugin'))({
+                host: 'localhost',
+                port: 3000,
+                server: { baseDir: '.' },
+            })
+        ])
     ],
 }
