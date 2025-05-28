@@ -2,11 +2,11 @@
 
 An interactive WebGL experience featuring snow and mountain imagery with custom hover and reveal effects built with Three.js and GLSL shaders.
 
-## 🌟 Live Demo
+## 🚀 Live Demo
 
-**[View Interactive Demo →](https://kurkure15.github.io/Hover-and-Bend/)**
+**[View Interactive Demo](https://kurkure15.github.io/Hover-and-Bend/)**
 
-*Experience the snow and mountain reveal effects with custom hover animations in your browser!*
+*Experience the snow and mountain reveal effects with custom hover animations.*
 
 ## Features
 
