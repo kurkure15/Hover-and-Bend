@@ -10,10 +10,6 @@ An interactive WebGL experience featuring snow and mountain imagery with custom 
 - **Custom Shaders**: Hand-crafted GLSL shaders for unique visual effects
 - **Responsive Design**: Works across different screen sizes
 
-## Demo
-
-Experience the interactive snow and mountain reveal effects with custom hover animations.
-
 ## Installation
 
 Run this command in the terminal:
@@ -63,8 +59,10 @@ This project is open source and available under the MIT License.
 ## Connect
 
 - **GitHub**: [kurkure15](https://github.com/kurkure15)
-- **Instagram**: [@your_instagram_handle](https://instagram.com/your_instagram_handle)
+- **Instagram**: (https://www.instagram.com/thehungryart_/)
+- **Twitter**: (https://x.com/_ankur_yadav_)
+- **Dribbble**: (https://dribbble.com/ankuryadav)
 
 ---
 
-*Built with ❄️ by [kurkure15](https://github.com/kurkure15)*
+*Built with 🧘‍♂️ by [kurkure15](https://github.com/kurkure15)*
