@@ -1,4 +1,4 @@
-import { TweenMax as TM } from 'gsap/all'
+import { gsap } from 'gsap'
 import Scrollbar from 'smooth-scrollbar'
 import OverscrollPlugin from 'smooth-scrollbar/plugins/overscroll'
 import Scene from './Scene'

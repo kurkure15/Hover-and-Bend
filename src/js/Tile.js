@@ -1,8 +1,7 @@
 import * as THREE from 'three'
-import { TweenMax as TM, Power2, Power3, Expo } from 'gsap/all'
+import { gsap } from 'gsap'
 import Scrollbar from 'smooth-scrollbar'
 import vertexShader from '../glsl/vertexShader.glsl'
-import { SplitText as ST } from './vendors/gsap/SplitText'
 
 import { clamp, getRatio, wrap, ev } from './utils/utils'
 
@@ -90,18 +89,18 @@ export default class Tile {
 
         if (!this.mesh) return
 
-        TM.to(this.uniforms.u_progressHover, this.duration, {
+        gsap.to(this.uniforms.u_progressHover, this.duration, {
             value: 1,
-            ease: Power2.easeInOut,
+            ease: 'power2.easeInOut',
         })
     }
 
     onPointerLeave() {
         if (!this.mesh || APP.Layout.isMobile) return
 
-        TM.to(this.uniforms.u_progressHover, this.duration, {
+        gsap.to(this.uniforms.u_progressHover, this.duration, {
             value: 0,
-            ease: Power2.easeInOut,
+            ease: 'power2.easeInOut',
             onComplete: () => {
                 this.isHovering = false
             },
@@ -132,7 +131,7 @@ export default class Tile {
         // Remove the conditions that disable mouse tracking when clicked/zoomed
         if (APP.Layout.isMobile) return
 
-        TM.to(this.mouse, 0.5, {
+        gsap.to(this.mouse, 0.5, {
             x: event.clientX,
             y: event.clientY,
         })
@@ -162,7 +161,7 @@ export default class Tile {
             u_ratio: { value: initialRatio },
         }
 
-        this.geometry = new THREE.PlaneBufferGeometry(1, 1, 1, 1)
+        this.geometry = new THREE.PlaneGeometry(1, 1, 1, 1)
 
         this.material = new THREE.ShaderMaterial({
             uniforms: this.uniforms,
@@ -197,12 +196,12 @@ export default class Tile {
         if (!this.mesh || this.isZoomed || this.hasClicked) return
         this.getBounds()
 
-        TM.set(this.mesh.position, {
+        gsap.set(this.mesh.position, {
             x: this.offset.x,
             y: this.offset.y,
         })
 
-        TM.to(this.mesh.scale, 0.3, {
+        gsap.to(this.mesh.scale, 0.3, {
             x: this.sizes.x - this.delta,
             y: this.sizes.y - this.delta,
             z: 1,
@@ -241,9 +240,9 @@ export default class Tile {
 
         this.hide(!shouldZoom, !open)
 
-        TM.to(this.uniforms.u_progressClick, 1.2, {
+        gsap.to(this.uniforms.u_progressClick, 1.2, {
             value: shouldZoom ? 1 : 0,
-            ease: Power2.easeInOut,
+            ease: 'power2.easeInOut',
             onComplete: () => {
                 this.isZoomed = shouldZoom
                 this.hasClicked = open
@@ -252,39 +251,39 @@ export default class Tile {
             },
         })
 
-        TM.to(this.mesh.scale, 1.2, {
+        gsap.to(this.mesh.scale, 1.2, {
             delay,
             x: newScl.x,
             y: newScl.y,
-            ease: Expo.easeInOut,
+            ease: 'expo.easeInOut',
             onUpdate: () => { this.getBounds() },
         })
 
-        TM.to(this.mesh.position, 1.2, {
+        gsap.to(this.mesh.position, 1.2, {
             delay,
             x: newPos.x,
             y: newPos.y,
-            ease: Expo.easeInOut,
+            ease: 'expo.easeInOut',
         })
 
-        TM.to(this.uniforms.u_ratio.value, 1.2, {
+        gsap.to(this.uniforms.u_ratio.value, 1.2, {
             delay,
             x: newRatio.x,
             y: newRatio.y,
-            ease: Expo.easeInOut,
+            ease: 'expo.easeInOut',
         })
     }
 
 
     hide(shouldHide, force) {
         const delay = shouldHide && !force ? 0 : 1.2
-        TM.to(this.uniforms.u_alpha, 0.5, {
+        gsap.to(this.uniforms.u_alpha, 0.5, {
             delay,
             value: shouldHide && !force ? 0 : 1,
-            ease: Power3.easeIn,
+            ease: 'power3.easeIn',
         })
 
-        TM.to(this.$els.el, 0.5, {
+        gsap.to(this.$els.el, 0.5, {
             delay,
             alpha: shouldHide && !force ? 0 : 1,
             force3D: true,
