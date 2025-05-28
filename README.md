@@ -1,47 +1,65 @@
-# Gooey Hover Effects on Images with Three.js
+# Snow & Mountains Reveal Effect
 
-Learn how to create a gooey reveal hover effects on images with Three.js using noise within a shader.
+An interactive WebGL experience featuring snow and mountain imagery with custom hover and reveal effects built with Three.js and GLSL shaders.
 
-![Thumbnail Gooey Hover Effect](https://tympanus.net/codrops/wp-content/uploads/2019/10/ThumbnailGooeyHoverEffect.jpg)
+## Features
 
-[Article on Codrops](https://tympanus.net/codrops/?p=43947)
+- **Interactive Hover Effects**: Custom WebGL shaders create smooth reveal animations
+- **Snow & Mountain Theme**: Beautiful winter landscape imagery
+- **Smooth Animations**: GSAP-powered transitions and interactions
+- **Custom Shaders**: Hand-crafted GLSL shaders for unique visual effects
+- **Responsive Design**: Works across different screen sizes
 
-[Demo](http://tympanus.net/Tutorials/GooeyImageHoverEffects/)
+## Demo
+
+Experience the interactive snow and mountain reveal effects with custom hover animations.
 
 ## Installation
-Run this command in the terminal
-```
+
+Run this command in the terminal:
+```bash
 npm install
 ```
 
-Compile the code
-```
+Compile the code:
+```bash
 npm run build
 ```
 
-Compile the code with a local server
-```
+Compile the code with a local server:
+```bash
 npm run watch
 ```
 
+## Technology Stack
+
+- **Three.js** - 3D graphics and WebGL rendering
+- **GLSL Shaders** - Custom fragment and vertex shaders
+- **GSAP** - Animation library for smooth transitions
+- **Webpack** - Module bundling and build process
+- **SASS** - CSS preprocessing
+
+## Project Structure
+
+```
+src/
+├── glsl/           # GLSL shader files
+├── js/             # JavaScript modules
+├── sass/           # SASS stylesheets
+└── img/            # Image assets
+```
 
 ## Credits
 
-- Images from [Unsplash](https://unsplash.com)
-- [Three.js](https://threejs.org/docs/)
-- [GSAP from GreenSock](https://greensock.com/)
-- [Smooth Scrollbar](https://idiotwu.github.io/smooth-scrollbar/)
-- [glslify](https://github.com/glslify/glslify)
-- [glsl-noise](https://www.npmjs.com/package/glsl-noise)
+- **Three.js** - [threejs.org](https://threejs.org/)
+- **GSAP** - [greensock.com](https://greensock.com/)
+- **glslify** - [github.com/glslify/glslify](https://github.com/glslify/glslify)
+- **glsl-noise** - [npmjs.com/package/glsl-noise](https://www.npmjs.com/package/glsl-noise)
 
 ## License
-This resource can be used freely if integrated or build upon in personal or commercial projects such as websites, web apps and web templates intended for sale. It is not allowed to take the resource "as-is" and sell it, redistribute, re-publish it, or sell "pluginized" versions of it. Free plugins built using this resource should have a visible mention and link to the original work. Always consider the licenses of all included libraries, scripts and images used.
 
-## Misc
+This project is open source and available under the MIT License.
 
-Follow Arno: [Twitter](https://twitter.com/aqro), [Dribbble](https://dribbble.com/Aqro), [Instagram](https://instagram.com/aqro/), [GitHub](https://github.com/Aqro)
+---
 
-Follow Codrops: [Twitter](http://www.twitter.com/codrops), [Facebook](http://www.facebook.com/codrops), [Google+](https://plus.google.com/101095823814290637419), [GitHub](https://github.com/codrops), [Pinterest](http://www.pinterest.com/codrops/), [Instagram](https://www.instagram.com/codropsss/)
-
-
-[© Codrops 2019](http://www.codrops.com)
+*Built with ❄️ by [kurkure15](https://github.com/kurkure15)*
