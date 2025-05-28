@@ -12,18 +12,10 @@ import waveShader from '../glsl/waveShader.glsl'
 const perspective = 800
 
 const shaders = [
-    trippyShader,
-    shapeShader,
-    gooeyShader,
-    waveShader,
     revealShader,
 ]
 
 const durations = [
-    0.5,
-    0.5,
-    0.5,
-    0.8,
     0.8,
 ]
 

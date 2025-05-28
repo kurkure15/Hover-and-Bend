@@ -1,15 +1,14 @@
 #pragma glslify: snoise3 = require('glsl-noise/simplex/3d')
 
 uniform sampler2D u_map;
-uniform sampler2D u_hovermap;
+// uniform sampler2D u_hovermap; // No longer needed
 
 uniform float u_time;
 uniform float u_alpha;
 
-
 uniform vec2 u_res;
 uniform vec2 u_ratio;
-uniform vec2 u_hoverratio;
+// uniform vec2 u_hoverratio; // No longer needed
 uniform vec2 u_mouse;
 uniform float u_progressHover;
 uniform float u_progressClick;
@@ -18,7 +17,7 @@ varying vec2 v_uv;
 
 float circle(in vec2 _st, in float _radius, in float blurriness){
     vec2 dist = _st;
-	  return 1. - smoothstep(_radius-(_radius*blurriness), _radius+(_radius*blurriness), dot(dist,dist)*4.0);
+    return 1. - smoothstep(_radius-(_radius*blurriness), _radius+(_radius*blurriness), dot(dist,dist)*4.0);
 }
 
 void main() {
@@ -48,10 +47,10 @@ void main() {
   uv_h *= 1. - progressHover * 0.1;
   uv_h += vec2(0.5);
 
-  uv_h *= u_hoverratio;
-
+  // Apply ratio scaling to UV coordinates
   uv -= vec2(0.5);
-  uv *= 1. - progressHover * 0.2;
+  float zoom = 1. - progressHover * 0.4;
+  uv = uv * zoom;
   uv *= u_ratio;
   uv += vec2(0.5);
 
@@ -60,7 +59,7 @@ void main() {
   float c = circle(cpos, .04 * progressHover + progress * 0.8, 2.) * 50.;
 
   vec4 image = texture2D(u_map, uv);
-  vec4 hover = texture2D(u_hovermap, uv_h + mouse * 0.1 * progressHover);
+  vec4 hover = texture2D(u_map, uv_h + mouse * 0.1 * progressHover); // Use base image for hover
 
   float pct = smoothstep(.99, 1., n + shape);
 

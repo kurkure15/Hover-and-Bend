@@ -1,6 +1,3 @@
-
-
-
 /* MAIN
 --------------------------------------------------------- */
 body {
@@ -34,7 +31,10 @@ body {
 }
 
 .scrollarea {
-    height: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .scrollarea-ctn {
@@ -67,4 +67,44 @@ body {
     line-height: 1.5;
 
     border-bottom: .1rem solid;
+}
+
+.slideshow {
+    position: relative;
+    width: auto;
+}
+
+.slideshow-list {
+    display: block;
+}
+
+.slideshow-list__el {
+    position: fixed !important;
+    top: 50vh !important;
+    left: 50vw !important;
+    transform: translate(-50%, -50%) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 350px !important;
+    z-index: 999 !important;
+}
+
+.center-me {
+    position: fixed !important;
+    top: 20% !important;
+    left: 20% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 300px !important;
+    height: auto !important;
+}
+
+/* Reset any conflicting parent containers */
+.scrollarea,
+.slideshow,
+.slideshow-list {
+    position: static !important;
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: none !important;
 }

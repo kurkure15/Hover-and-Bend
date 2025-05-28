@@ -14,8 +14,8 @@ export default class Tile {
             body: document.body,
             el: $el,
             link: $el.querySelector('a'),
-            text: $el.querySelectorAll('.tile__title, .tile__cta'),
-            title: $el.querySelector('.tile__title').innerText,
+            text: [],
+            title: '',
         }
 
         this.duration = duration
@@ -39,7 +39,7 @@ export default class Tile {
         this.isZoomed = false
 
         this.loader = new THREE.TextureLoader()
-        this.preload([this.mainImage.src, this.mainImage.dataset.hover, '/dist/img/shape.jpg'], () => { this.initTile() })
+        this.preload([this.mainImage.src, '/dist/img/shape.jpg'], () => { this.initTile() })
 
         this.Scroll = Scrollbar.get(document.querySelector('.scrollarea'))
 
@@ -81,7 +81,7 @@ export default class Tile {
     onPointerEnter() {
         this.isHovering = true
 
-        if (this.isZoomed || this.hasClicked || APP.Layout.isMobile) return
+        if (APP.Layout.isMobile) return
 
         const idx = clamp([...this.$els.el.parentElement.children].indexOf(this.$els.el) + 1, 1, 5)
 
@@ -97,7 +97,7 @@ export default class Tile {
     }
 
     onPointerLeave() {
-        if (!this.mesh || this.isZoomed || this.hasClicked || APP.Layout.isMobile) return
+        if (!this.mesh || APP.Layout.isMobile) return
 
         TM.to(this.uniforms.u_progressHover, this.duration, {
             value: 0,
@@ -113,7 +113,14 @@ export default class Tile {
 
         if (!this.mesh) return
 
-        this.mesh.scale.set(this.sizes.x, this.sizes.y, 1)
+        // Set mesh scale to match image aspect ratio
+        const aspect = this.mainImage.naturalWidth / this.mainImage.naturalHeight
+        if (aspect >= 1) {
+            this.mesh.scale.set(aspect, 1, 1)
+        } else {
+            this.mesh.scale.set(1, 1 / aspect, 1)
+        }
+
         this.uniforms.u_res.value.set(window.innerWidth, window.innerHeight)
     }
 
@@ -122,7 +129,8 @@ export default class Tile {
     }
 
     onMouseMove(event) {
-        if (this.isZoomed || this.hasClicked || APP.Layout.isMobile) return
+        // Remove the conditions that disable mouse tracking when clicked/zoomed
+        if (APP.Layout.isMobile) return
 
         TM.to(this.mouse, 0.5, {
             x: event.clientX,
@@ -135,31 +143,23 @@ export default class Tile {
     --------------------------------------------------------- */
 
     initTile() {
-        this.stgs = new ST(this.$els.text, { type: 'lines', linesClass: 'line' })
-
-        this.stgs.lines.forEach((l) => {
-            const div = document.createElement('div')
-            div.classList.add('line-ctn')
-            wrap(l, div)
-        })
-
         const texture = this.images[0]
-        const hoverTexture = this.images[1]
 
         this.getBounds()
+
+        // Calculate initial ratio properly
+        const initialRatio = getRatio(this.sizes, this.images[0].image)
 
         this.uniforms = {
             u_alpha: { value: 1 },
             u_map: { type: 't', value: texture },
-            u_ratio: { value: getRatio(this.sizes, texture.image) },
-            u_hovermap: { type: 't', value: hoverTexture },
-            u_hoverratio: { value: getRatio(this.sizes, hoverTexture.image) },
             u_shape: { value: this.images[2] },
             u_mouse: { value: this.mouse },
             u_progressHover: { value: 0 },
             u_progressClick: { value: 0 },
             u_time: { value: this.clock.getElapsedTime() },
             u_res: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+            u_ratio: { value: initialRatio },
         }
 
         this.geometry = new THREE.PlaneBufferGeometry(1, 1, 1, 1)
@@ -180,7 +180,13 @@ export default class Tile {
         this.mesh.position.x = this.offset.x
         this.mesh.position.y = this.offset.y
 
-        this.mesh.scale.set(this.sizes.x, this.sizes.y, 1)
+        // Set mesh scale to match image aspect ratio
+        const aspect = this.mainImage.naturalWidth / this.mainImage.naturalHeight
+        if (aspect >= 1) {
+            this.mesh.scale.set(aspect, 1, 1)
+        } else {
+            this.mesh.scale.set(1, 1 / aspect, 1)
+        }
 
         this.scene.mainScene.add(this.mesh)
 
@@ -212,7 +218,7 @@ export default class Tile {
 
         this.prevScroll = this.scroll
 
-        if (!this.isHovering) return
+        // Allow time updates even when not hovering for continuous animation
         this.uniforms.u_time.value += this.clock.getDelta()
     }
 
@@ -229,9 +235,9 @@ export default class Tile {
             y: shouldZoom ? -20 : this.offset.y,
         }
 
-        const newRatio = getRatio(newScl, this.images[1].image)
+        const newRatio = getRatio(newScl, this.images[0].image)
 
-        const delay = shouldZoom ? 0.4 : 0
+        const delay = shouldZoom ? 0.5 : 0
 
         this.hide(!shouldZoom, !open)
 
@@ -241,11 +247,6 @@ export default class Tile {
             onComplete: () => {
                 this.isZoomed = shouldZoom
                 this.hasClicked = open
-
-                TM.to(this.uniforms.u_progressHover, this.duration, {
-                    value: shouldZoom ? 1 : 0,
-                    ease: Power2.easeInOut,
-                })
 
                 ev('view:toggle', { shouldOpen: shouldZoom, target: this })
             },
@@ -266,18 +267,12 @@ export default class Tile {
             ease: Expo.easeInOut,
         })
 
-        TM.to(this.uniforms.u_hoverratio.value, 1.2, {
+        TM.to(this.uniforms.u_ratio.value, 1.2, {
             delay,
             x: newRatio.x,
             y: newRatio.y,
             ease: Expo.easeInOut,
         })
-
-        TM.staggerTo(this.stgs.lines, 1, {
-            yPercent: shouldZoom ? 100 : 0,
-            ease: Expo.easeInOut,
-            force3D: true,
-        }, 0.35 / this.stgs.lines.length)
     }
 
 
