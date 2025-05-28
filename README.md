@@ -1,4 +1,4 @@
-# Snow & Mountains Reveal Effect
+# Hover & Bend Effect
 
 An interactive WebGL experience featuring snow and mountain imagery with custom hover and reveal effects built with Three.js and GLSL shaders.
 
