@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { gsap } from 'gsap'
+import { TweenMax as TM, Power2, Power3, Expo } from 'gsap/all'
 import Scrollbar from 'smooth-scrollbar'
 import vertexShader from '../glsl/vertexShader.glsl'
 
@@ -89,20 +89,24 @@ export default class Tile {
 
         if (!this.mesh) return
 
-        gsap.to(this.uniforms.u_progressHover, this.duration, {
+        TM.to(this.uniforms.u_progressHover, this.duration, {
             value: 1,
-            ease: 'power2.easeInOut',
+            ease: Power2.easeInOut,
         })
     }
 
     onPointerLeave() {
-        if (!this.mesh || APP.Layout.isMobile) return
+        if (!this.mesh || APP.Layout.isMobile) return;
 
-        gsap.to(this.uniforms.u_progressHover, this.duration, {
+        if (this.hasClicked) {
+            return;
+        }
+
+        TM.to(this.uniforms.u_progressHover, this.duration, {
             value: 0,
-            ease: 'power2.easeInOut',
+            ease: Power2.easeInOut,
             onComplete: () => {
-                this.isHovering = false
+                this.isHovering = false;
             },
         })
     }
@@ -131,7 +135,7 @@ export default class Tile {
         // Remove the conditions that disable mouse tracking when clicked/zoomed
         if (APP.Layout.isMobile) return
 
-        gsap.to(this.mouse, 0.5, {
+        TM.to(this.mouse, 0.5, {
             x: event.clientX,
             y: event.clientY,
         })
@@ -161,7 +165,7 @@ export default class Tile {
             u_ratio: { value: initialRatio },
         }
 
-        this.geometry = new THREE.PlaneGeometry(1, 1, 1, 1)
+        this.geometry = new THREE.PlaneBufferGeometry(1, 1, 1, 1)
 
         this.material = new THREE.ShaderMaterial({
             uniforms: this.uniforms,
@@ -196,12 +200,12 @@ export default class Tile {
         if (!this.mesh || this.isZoomed || this.hasClicked) return
         this.getBounds()
 
-        gsap.set(this.mesh.position, {
+        TM.set(this.mesh.position, {
             x: this.offset.x,
             y: this.offset.y,
         })
 
-        gsap.to(this.mesh.scale, 0.3, {
+        TM.to(this.mesh.scale, 0.3, {
             x: this.sizes.x - this.delta,
             y: this.sizes.y - this.delta,
             z: 1,
@@ -240,50 +244,72 @@ export default class Tile {
 
         this.hide(!shouldZoom, !open)
 
-        gsap.to(this.uniforms.u_progressClick, 1.2, {
+        TM.to(this.uniforms.u_progressClick, 1.2, {
             value: shouldZoom ? 1 : 0,
-            ease: 'power2.easeInOut',
+            ease: Power2.easeInOut,
             onComplete: () => {
-                this.isZoomed = shouldZoom
-                this.hasClicked = open
+                const previouslyZoomed = this.isZoomed; // Capture state before update
 
-                ev('view:toggle', { shouldOpen: shouldZoom, target: this })
+                this.isZoomed = shouldZoom;
+                this.hasClicked = open;
+
+                ev('view:toggle', { shouldOpen: shouldZoom, target: this });
+
+                // If this tile just finished closing (unzooming)
+                if (!shouldZoom && previouslyZoomed && tile === this && !open) { 
+                    if (this.uniforms && this.uniforms.u_progressHover) {
+                        if (!this.$els.link.matches(':hover')) {
+                            TM.to(this.uniforms.u_progressHover, 0.3, { // Shorter duration
+                                value: 0,
+                                ease: Power2.easeOut,
+                                onComplete: () => { this.isHovering = false; }
+                            });
+                        } else {
+                            // Mouse is still over the small tile, ensure hover state is active
+                            this.isHovering = true;
+                            // If u_progressHover somehow got to 0, but mouse is over, restore it
+                            if (this.uniforms.u_progressHover.value < 1.0) {
+                                TM.to(this.uniforms.u_progressHover, 0.3, { value: 1, ease: Power2.easeOut });
+                            }
+                        }
+                    }
+                }
             },
         })
 
-        gsap.to(this.mesh.scale, 1.2, {
+        TM.to(this.mesh.scale, 1.2, {
             delay,
             x: newScl.x,
             y: newScl.y,
-            ease: 'expo.easeInOut',
+            ease: Expo.easeInOut,
             onUpdate: () => { this.getBounds() },
         })
 
-        gsap.to(this.mesh.position, 1.2, {
+        TM.to(this.mesh.position, 1.2, {
             delay,
             x: newPos.x,
             y: newPos.y,
-            ease: 'expo.easeInOut',
+            ease: Expo.easeInOut,
         })
 
-        gsap.to(this.uniforms.u_ratio.value, 1.2, {
+        TM.to(this.uniforms.u_ratio.value, 1.2, {
             delay,
             x: newRatio.x,
             y: newRatio.y,
-            ease: 'expo.easeInOut',
+            ease: Expo.easeInOut,
         })
     }
 
 
     hide(shouldHide, force) {
         const delay = shouldHide && !force ? 0 : 1.2
-        gsap.to(this.uniforms.u_alpha, 0.5, {
+        TM.to(this.uniforms.u_alpha, 0.5, {
             delay,
             value: shouldHide && !force ? 0 : 1,
-            ease: 'power3.easeIn',
+            ease: Power3.easeIn,
         })
 
-        gsap.to(this.$els.el, 0.5, {
+        TM.to(this.$els.el, 0.5, {
             delay,
             alpha: shouldHide && !force ? 0 : 1,
             force3D: true,
