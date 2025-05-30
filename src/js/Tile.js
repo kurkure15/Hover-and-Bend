@@ -82,8 +82,9 @@ export default class Tile {
 
         if (APP.Layout.isMobile) return
 
-        const idx = clamp([...this.$els.el.parentElement.children].indexOf(this.$els.el) + 1, 1, 5)
-
+        // Always use the first tile's colors instead of calculating based on current tile
+        const idx = 1; // Force to use first tile's color scheme
+        
         document.documentElement.style.setProperty('--color-bg', `var(--color-bg${idx})`)
         document.documentElement.style.setProperty('--color-text', `var(--color-text${idx})`)
 
@@ -99,6 +100,11 @@ export default class Tile {
         if (!this.mesh || APP.Layout.isMobile) return;
 
         if (this.hasClicked) {
+            return;
+        }
+
+        // Don't hide image if this tile is active via navigation
+        if (this.navigationActive) {
             return;
         }
 
@@ -147,6 +153,8 @@ export default class Tile {
 
     initTile() {
         const texture = this.images[0]
+
+        console.log('Tile initialized:', this.mainImage.src, this.mesh, texture);
 
         this.getBounds()
 

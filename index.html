@@ -49,6 +49,103 @@
             margin-left: 200px; /* Same as side-navigation width */
             /* If your main content also has padding, adjust accordingly */
         }
+
+        /* Disable transitions during navigation to prevent sliding animations */
+        .navigation-switching .tile__img {
+            transition: none !important;
+        }
+        .navigation-switching * {
+            transition: none !important;
+        }
+
+        /* Navigation hover preview */
+        #nav-preview {
+            position: fixed;
+            width: 64px;
+            height: 64px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+            border: 2px solid #fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            pointer-events: none;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            z-index: 9999;
+        }
+
+        #nav-preview.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Ensure all tile content is visible */
+        .tile__content {
+            color: #EDEDED !important;
+        }
+        
+        .tile__title {
+            color: #EDEDED !important;
+        }
+        
+        .tile__cta {
+            color: #EDEDED !important;
+        }
+        
+        .tile_button {
+            color: #A0A0A0 !important;
+            background-color: #000000 !important;
+            padding: 8px 16px !important;
+            border: 0.5px solid #A0A0A0 !important;
+            border-radius: 32px !important;
+            font-family: "Inter", sans-serif !important;
+            font-size: 12px !important;
+            text-decoration: none !important;
+            display: inline-block !important;
+            margin-top: 10px !important;
+            cursor: pointer !important;
+            position: absolute !important;
+            bottom: 0px !important;
+            left: -15.5rem !important;
+            z-index: 10 !important;
+        }
+        
+        /* For tiles with Previous button, move Next button to the right */
+        #tile-fell-for-her .tile_button,
+        #tile-our-little-pause .tile_button,
+        #tile-first-drug .tile_button,
+        #tile-inner-orbit .tile_button {
+            left: calc(-15.5rem + 100px + 2px) !important; /* actual text left + Previous button width + 32px spacing */
+        }
+        
+        .tile_button_prev {
+            color: #A0A0A0 !important;
+            background-color: #000000 !important;
+            padding: 8px 16px !important;
+            border: 0.5px solid #A0A0A0 !important;
+            border-radius: 32px !important;
+            font-family: "Inter", sans-serif !important;
+            font-size: 12px !important;
+            text-decoration: none !important;
+            display: inline-block !important;
+            margin-top: 10px !important;
+            cursor: pointer !important;
+            position: absolute !important;
+            bottom: 0px !important;
+            left: -15.5rem !important;
+            z-index: 10 !important;
+        }
+        
+        .tile_button:hover {
+            border-color: #ffffff !important;
+            color: #ffffff !important;
+        }
+        
+        .tile_button_prev:hover {
+            border-color: #ffffff !important;
+            color: #ffffff !important;
+        }
     </style>
     <script src="dist/app.js"></script>
 </head>
@@ -56,17 +153,18 @@
 <body>
     <nav id="side-navigation">
         <ul>
-            <li><a href="#">One with the Blue</a></li>
-            <li><a href="#">Fell for Her Again</a></li>
-            <li><a href="#">Our Little Pause</a></li>
-            <li><a href="#">First Drug</a></li>
-            <li><a href="#">Inner Orbit</a></li>
+            <li><a href="#" data-target="tile-one-with-the-blue">One with the Blue</a></li>
+            <li><a href="#" data-target="tile-fell-for-her">Fell for Her Again</a></li>
+            <li><a href="#" data-target="tile-our-little-pause">Our Little Pause</a></li>
+            <li><a href="#" data-target="tile-first-drug">First Drug</a></li>
+            <li><a href="#" data-target="tile-inner-orbit">Inner Orbit</a></li>
         </ul>
     </nav>
+    <div id="nav-preview"></div>
     <main>
         <div class="scrollarea | slideshow">
             <ul class="slideshow-list">
-                <li class="slideshow-list__el">
+                <li class="slideshow-list__el" id="tile-one-with-the-blue">
                     <article class="tile | js-tile">
                         <a href="#">
                             <figure class="tile__fig">
@@ -79,15 +177,337 @@
                                     Before he could settle in, Blue—his golden retriever, morning enthusiast and perpetual optimist—bounded up, plopped down at his side, and rested a warm paw on Ankur's boot, as if to say "Ready when you are."
                                     
                                     "Patience, buddy," Ankur chuckled, scratching behind Blue's velvet ears. "The day's barely awake."
-                                    <span class=" tile_ button"> See next</span>
-                                </div>
+                                </span>
+                            </div>
                         </a>
+                        <span class="tile_button">Next</span>
+                    </article>
+                </li>
+                <li class="slideshow-list__el" id="tile-fell-for-her">
+                    <article class="tile | js-tile">
+                        <a href="#">
+                            <figure class="tile__fig">
+                                <img src="dist/img/tiles/cities/fellforher.PNG" data-hover="dist/img/tiles/cities/fellforher.PNG" alt="Fell for her again" class="tile__img">
+                            </figure>
+                            <div class="tile__content">
+                                <h2 class="tile__title">Fell for her again</h2>
+                                <span class="tile__cta">One evening, I saw my girlfriend reading, completely lost in her world. Her focus, her quiet quirks, her calm. It made me fall for her all over again. I illustrated that moment on Procreate, lovingly.
+                                </span>
+                            </div>
+                        </a>
+                        <span class="tile_button_prev">Previous</span>
+                        <span class="tile_button">Next</span>
+                    </article>
+                </li>
+                <li class="slideshow-list__el" id="tile-our-little-pause">
+                    <article class="tile | js-tile">
+                        <a href="#">
+                            <figure class="tile__fig">
+                                <img src="dist/img/tiles/rocks/ourpause.PNG" data-hover="dist/img/tiles/rocks/ourpause.PNG" alt="Our Little Pause" class="tile__img">
+                            </figure>
+                            <div class="tile__content">
+                                <h2 class="tile__title">Our Little Pause</h2>
+                                <span class="tile__cta">There's magic in the smallest pauses. That evening, she joined me on the balcony, coffee in hand, clouds drifting by. No words, just us. I drew this on Procreate to hold that quiet magic forever.
+                                </span>
+                            </div>
+                        </a>
+                        <span class="tile_button_prev">Previous</span>
+                        <span class="tile_button">Next</span>
+                    </article>
+                </li>
+                <li class="slideshow-list__el" id="tile-first-drug">
+                    <article class="tile | js-tile">
+                        <a href="#">
+                            <figure class="tile__fig">
+                                <img src="dist/img/tiles/woods/drug.PNG" data-hover="dist/img/tiles/woods/drug.PNG" alt="First Drug" class="tile__img">
+                            </figure>
+                            <div class="tile__content">
+                                <h2 class="tile__title">First Drug</h2>
+                                <span class="tile__cta">The first cup of coffee is magic, a quiet chat with myself before the world begins. I illustrated this on Procreate: just me and my coffee, sitting, sipping, and greeting the morning like old friends!
+                                </span>
+                            </div>
+                        </a>
+                        <span class="tile_button_prev">Previous</span>
+                        <span class="tile_button">Next</span>
+                    </article>
+                </li>
+                <li class="slideshow-list__el" id="tile-inner-orbit">
+                    <article class="tile | js-tile">
+                        <a href="#">
+                            <figure class="tile__fig">
+                                <img src="dist/img/tiles/inner orbit/innerorbit.PNG" data-hover="dist/img/tiles/inner orbit/innerorbit.PNG" alt="Inner Orbit" class="tile__img">
+                            </figure>
+                            <div class="tile__content">
+                                <h2 class="tile__title">Inner Orbit</h2>
+                                <span class="tile__cta">Created in my early Procreate days, when silence was loud and the void, endless. It captures the feeling of chasing dreams, trusting the faint glow within, and moving forward with quiet, guarded hope. Just me, my armor, and a whisper: keep going.
+                                </span>
+                            </div>
+                        </a>
+                        <span class="tile_button_prev">Previous</span>
+                        <span class="tile_button">Next</span>
                     </article>
                 </li>
             </ul>
         </div>
         <canvas id="scene"></canvas>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Simple navigation starting...');
+      
+      // Get all navigation links and tiles
+      const navLinks = document.querySelectorAll('#side-navigation a');
+      const allTiles = document.querySelectorAll('.slideshow-list__el');
+      
+      console.log('Found nav links:', navLinks.length);
+      console.log('Found tiles:', allTiles.length);
+      
+      // Get preview element
+      const preview = document.getElementById('nav-preview');
+      
+      // Add hover preview functionality to navigation links
+      navLinks.forEach(link => {
+        link.addEventListener('mouseenter', function(e) {
+          const targetId = this.dataset.target;
+          const targetTile = document.getElementById(targetId);
+          
+          if (targetTile) {
+            const img = targetTile.querySelector('img');
+            if (img) {
+              // Set preview image
+              preview.style.backgroundImage = `url(${img.src})`;
+              
+              // Position preview near the hovered link
+              const rect = this.getBoundingClientRect();
+              preview.style.left = (rect.right + 10) + 'px';
+              preview.style.top = (rect.top + rect.height/2 - 32) + 'px';
+              
+              // Show preview
+              preview.classList.add('show');
+            }
+          }
+        });
+        
+        link.addEventListener('mouseleave', function(e) {
+          // Hide preview
+          preview.classList.remove('show');
+        });
+      });
+      
+      // Function to show a specific tile and hide others
+      function showTile(targetId) {
+        console.log('Showing tile:', targetId);
+        
+        allTiles.forEach(tile => {
+          if (tile.id === targetId) {
+            tile.style.display = 'block';
+            console.log('Showed:', tile.id);
+            
+            // Use a retry mechanism to ensure 3D system is ready
+            let attempts = 0;
+            const maxAttempts = 10;
+            const tryActivate = () => {
+              attempts++;
+              
+              if (window.APP && APP.Stage && APP.Stage.scene && APP.Stage.scene.tiles) {
+                const tileInstance = APP.Stage.scene.tiles.find(t => t.$els.el === tile);
+                if (tileInstance && tileInstance.onPointerEnter) {
+                  // Set flag immediately
+                  tileInstance.navigationActive = true;
+                  
+                  // Call the actual hover method to make image appear
+                  tileInstance.onPointerEnter();
+                  console.log('Called onPointerEnter for:', tile.id);
+                  return; // Success, stop retrying
+                }
+              }
+              
+              // Retry if not ready yet
+              if (attempts < maxAttempts) {
+                console.log(`Retry ${attempts} for tile activation:`, tile.id);
+                setTimeout(tryActivate, 200);
+              } else {
+                console.error('Failed to activate tile after max attempts:', tile.id);
+              }
+            };
+            
+            // Start trying immediately
+            tryActivate();
+            
+          } else {
+            tile.style.display = 'none';
+            console.log('Hid:', tile.id);
+            
+            // Deactivate non-active tiles
+            if (window.APP && APP.Stage && APP.Stage.scene && APP.Stage.scene.tiles) {
+              const tileInstance = APP.Stage.scene.tiles.find(t => t.$els.el === tile);
+              if (tileInstance) {
+                tileInstance.navigationActive = false;
+                
+                // Only hide if not actually being hovered
+                if (!tileInstance.isHovering) {
+                  if (tileInstance.uniforms && tileInstance.uniforms.u_progressHover && window.TM) {
+                    TM.to(tileInstance.uniforms.u_progressHover, 0.2, { 
+                      value: 0, 
+                      ease: 'Power2.easeOut' 
+                    });
+                  }
+                }
+              }
+            }
+          }
+        });
+        
+        // Update active nav
+        navLinks.forEach(link => {
+          if (link.dataset.target === targetId) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+      }
+      
+      // Add click listeners
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetId = this.dataset.target;
+          console.log('Clicked nav for:', targetId);
+          showTile(targetId);
+        });
+      });
+      
+      // Show first tile initially
+      if (navLinks.length > 0) {
+        const firstTarget = navLinks[0].dataset.target;
+        console.log('Initial tile:', firstTarget);
+        showTile(firstTarget);
+      }
+      
+      // Add "See next" button functionality
+      function setupSeeNextButtons() {
+        // Get all "See next" buttons
+        const seeNextButtons = document.querySelectorAll('.tile_button');
+        console.log('Looking for buttons with selector .tile_button');
+        console.log('Found buttons:', seeNextButtons);
+        console.log('Button count:', seeNextButtons.length);
+        
+        seeNextButtons.forEach((button, index) => {
+          console.log(`Setting up button ${index}:`, button);
+          
+          // Remove any existing event listeners first
+          button.removeEventListener('click', handleSeeNextClick);
+          
+          // Add the click handler
+          button.addEventListener('click', handleSeeNextClick, true); // Use capture phase
+          
+          button.addEventListener('mouseenter', () => {
+            console.log('Button hovered:', button);
+          });
+        });
+        
+        // Get all "See previous" buttons
+        const seePrevButtons = document.querySelectorAll('.tile_button_prev');
+        console.log('Looking for previous buttons with selector .tile_button_prev');
+        console.log('Found previous buttons:', seePrevButtons);
+        console.log('Previous button count:', seePrevButtons.length);
+        
+        seePrevButtons.forEach((button, index) => {
+          console.log(`Setting up previous button ${index}:`, button);
+          
+          // Remove any existing event listeners first
+          button.removeEventListener('click', handleSeePrevClick);
+          
+          // Add the click handler
+          button.addEventListener('click', handleSeePrevClick, true); // Use capture phase
+          
+          button.addEventListener('mouseenter', () => {
+            console.log('Previous button hovered:', button);
+          });
+        });
+        
+        console.log('See next buttons setup complete. Found buttons:', seeNextButtons.length);
+        console.log('See previous buttons setup complete. Found buttons:', seePrevButtons.length);
+      }
+      
+      // Separate function for handling see next clicks
+      function handleSeeNextClick(e) {
+        console.log('See next button clicked - preventing all other events');
+        console.log('Event target:', e.target);
+        
+        // Prevent everything
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        
+        // Find current active navigation item
+        const activeNavLink = document.querySelector('#side-navigation a.active');
+        if (activeNavLink) {
+          const currentIndex = Array.from(navLinks).indexOf(activeNavLink);
+          const nextIndex = (currentIndex + 1) % navLinks.length; // Loop back to first if at end
+          
+          const nextNavLink = navLinks[nextIndex];
+          const nextTargetId = nextNavLink.dataset.target;
+          
+          console.log(`See next navigation: ${activeNavLink.dataset.target} → ${nextTargetId}`);
+          showTile(nextTargetId);
+        }
+        
+        return false;
+      }
+      
+      // Separate function for handling see previous clicks
+      function handleSeePrevClick(e) {
+        console.log('See previous button clicked - preventing all other events');
+        console.log('Event target:', e.target);
+        
+        // Prevent everything
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        
+        // Find current active navigation item
+        const activeNavLink = document.querySelector('#side-navigation a.active');
+        if (activeNavLink) {
+          const currentIndex = Array.from(navLinks).indexOf(activeNavLink);
+          const prevIndex = (currentIndex - 1 + navLinks.length) % navLinks.length; // Loop to last if at beginning
+          
+          const prevNavLink = navLinks[prevIndex];
+          const prevTargetId = prevNavLink.dataset.target;
+          
+          console.log(`See previous navigation: ${activeNavLink.dataset.target} → ${prevTargetId}`);
+          showTile(prevTargetId);
+        }
+        
+        return false;
+      }
+      
+      // Setup see next buttons after a short delay to ensure tiles are rendered
+      setTimeout(setupSeeNextButtons, 500);
+      
+      console.log('Simple navigation setup complete!');
+      
+      // Periodic check to ensure navigation-active tiles stay visible
+      setInterval(() => {
+        if (window.APP && APP.Stage && APP.Stage.scene && APP.Stage.scene.tiles && window.TM) {
+          APP.Stage.scene.tiles.forEach(tileInstance => {
+            if (tileInstance.navigationActive && 
+                tileInstance.uniforms && 
+                tileInstance.uniforms.u_progressHover && 
+                tileInstance.uniforms.u_progressHover.value < 0.9) {
+              // Force image to stay visible for navigation-active tiles
+              TM.to(tileInstance.uniforms.u_progressHover, 0.2, { 
+                value: 1, 
+                ease: 'Power2.easeOut' 
+              });
+              console.log('Enforced visibility for navigation-active tile');
+            }
+          });
+        }
+      }, 500); // Check every 500ms
+    });
+    </script>
 </body>
 
 </html>

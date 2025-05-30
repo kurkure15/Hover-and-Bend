@@ -58,7 +58,7 @@ export default class Scene {
         this.renderer.setSize(this.W, this.H)
         this.renderer.setPixelRatio(window.devicePixelRatio)
 
-        this.tiles = Array.from(this.$tiles).map(($el, i) => new Tile($el, this, durations[i], shaders[i]))
+        this.tiles = Array.from(this.$tiles).map(($el) => new Tile($el, this, durations[0], shaders[0]))
 
         this.update()
     }
