@@ -234,7 +234,7 @@ export default class Tile {
         }
 
         const newPos = {
-            x: shouldZoom ? window.innerWidth / 2 - window.innerWidth * 0.05 - this.sizes.x * 0.95 : this.offset.x,
+            x: shouldZoom ? 350 : this.offset.x,  // Manual control: Change this number to move left/right
             y: shouldZoom ? -20 : this.offset.y,
         }
 

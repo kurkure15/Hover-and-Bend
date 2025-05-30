@@ -5,7 +5,7 @@
 .tile__fig {
     position: relative;
     width: 100%;
-    overflow: hidden;
+    overflow: visible;
     border-radius: 24px;
 
     &::before {
