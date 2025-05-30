@@ -20,7 +20,7 @@
     display: block;
     position: absolute;
     top: 0;
-    left: 0;
+    left: 20rem;
     width: 120%;
     height: 100%;
     object-fit: none;
@@ -37,7 +37,7 @@
 .tile__content {
     position: absolute;
     top: 1rem;
-    left: -20rem;
+    left: 2rem;
     width: 100%;
     font-size: 16px;
     font-family: 'Source Serif 4', serif;
@@ -56,7 +56,7 @@
 
 
 .tile__title {
-    margin-left: 10%;
+    margin-left: 30%;
     color: #EDEDED;
 
     white-space: nowrap;

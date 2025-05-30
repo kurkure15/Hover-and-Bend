@@ -6,10 +6,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Snow & Mountains Reveal Effect</title>
     <link rel="stylesheet" type="text/css" href="dist/app.css" />
+    <style>
+        #side-navigation {
+            position: fixed;
+            top: 150px;
+            left: 80px;
+            width: 180px; /* Adjust width as needed */
+            height: 100vh;
+            /* background-color: #000000; Dark background */
+            padding: 20px;
+            padding-top: 60px; /* Space for a potential header */
+            box-sizing: border-box;
+            z-index: 1000; /* Ensure it's above other content */
+            overflow-y: auto;
+        }
+
+        #side-navigation ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #side-navigation li a {
+            display: block;
+            padding: 10px 15px;
+            margin-bottom: 1px;
+            color: #a0a0a0; /* Light grey text */
+            text-decoration: none;
+            font-size: 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        #side-navigation li a:hover,
+        #side-navigation li a.active {
+            /* background-color: #444; Slightly lighter on hover/active */
+            color: #fff; /* White text on hover/active */
+        }
+
+        /* Adjust main content to not be overlapped by side navigation */
+        main {
+            margin-left: 200px; /* Same as side-navigation width */
+            /* If your main content also has padding, adjust accordingly */
+        }
+    </style>
     <script src="dist/app.js"></script>
 </head>
 
 <body>
+    <nav id="side-navigation">
+        <ul>
+            <li><a href="#">One with the Blue</a></li>
+            <li><a href="#">Fell for Her Again</a></li>
+            <li><a href="#">Our Little Pause</a></li>
+            <li><a href="#">First Drug</a></li>
+            <li><a href="#">Inner Orbit</a></li>
+        </ul>
+    </nav>
     <main>
         <div class="scrollarea | slideshow">
             <ul class="slideshow-list">
@@ -21,11 +74,11 @@
                             </figure>
                             <div class="tile__content">
                                 <h2 class="tile__title">One with the Blue</h2>
-                                <span class="tile__cta"> Ankur slipped out the back door just as the first streaks of apricot light brushed the sky. He padded across the dew-tipped grass and took his usual seat on the cool concrete step beside the little flower bed he’d planted last month.
+                                <span class="tile__cta"> Ankur slipped out the back door just as the first streaks of apricot light brushed the sky. He padded across the dew-tipped grass and took his usual seat on the cool concrete step beside the little flower bed he'd planted last month.
 
-                                    Before he could settle in, Blue—his golden retriever, morning enthusiast and perpetual optimist—bounded up, plopped down at his side, and rested a warm paw on Ankur’s boot, as if to say “Ready when you are.”
+                                    Before he could settle in, Blue—his golden retriever, morning enthusiast and perpetual optimist—bounded up, plopped down at his side, and rested a warm paw on Ankur's boot, as if to say "Ready when you are."
                                     
-                                    “Patience, buddy,” Ankur chuckled, scratching behind Blue’s velvet ears. “The day’s barely awake.”
+                                    "Patience, buddy," Ankur chuckled, scratching behind Blue's velvet ears. "The day's barely awake."
                                     <span class=" tile_ button"> See next</span>
                                 </div>
                         </a>
